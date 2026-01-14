@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ai_vehicle_counter/ui/widgets/app_loading.dart';
 import 'package:ai_vehicle_counter/ui/widgets/app_error.dart';
-import 'package:ai_vehicle_counter/models/vehicle_count.dart';
 import 'package:ai_vehicle_counter/services/vehicle_api_service.dart';
 
 /// HomeScreen canlı araç sayısını ve son güncellenme zamanını gösteren ana ekrandır.
@@ -24,18 +23,18 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadCount();
   }
 
-  /// Mock API'den araç sayısını yükler, loading ve hata durumlarını yönetir.
+  /// Araç sayısını GET endpoint'inden yükler, loading ve hata durumlarını yönetir.
   Future<void> _loadCount() async {
     setState(() {
       _loading = true;
       _error = null;
     });
     try {
-      final VehicleCount result = await fetchLatestVehicleCount();
+      final int count = await fetchCarCount();
       if (!mounted) return;
       setState(() {
-        _vehicleCount = result.count;
-        _lastUpdate = result.timestamp;
+        _vehicleCount = count;
+        _lastUpdate = DateTime.now();
       });
     } catch (e) {
       if (!mounted) return;
@@ -43,10 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
         _error = 'Bir şeyler ters gitti, lütfen tekrar deneyin.';
       });
     } finally {
-      if (!mounted) return;
-      setState(() {
-        _loading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _loading = false;
+        });
+      }
     }
   }
 
@@ -114,8 +114,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       if (_loading)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12),
                           child: AppLoading(size: 40),
                         )
                       else

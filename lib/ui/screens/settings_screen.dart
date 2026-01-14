@@ -53,11 +53,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const SizedBox(height: 12),
           // App version
-          Card(
+          const Card(
             clipBehavior: Clip.antiAlias,
             child: ListTile(
-              leading: const Icon(Icons.info_outline),
-              title: const Text('Version 1.0.0'),
+              leading: Icon(Icons.info_outline),
+              title: Text('Version 1.0.0'),
             ),
           ),
         ],

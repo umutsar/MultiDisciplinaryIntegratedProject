@@ -44,10 +44,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
         _error = 'Bir şeyler ters gitti, lütfen tekrar deneyin.';
       });
     } finally {
-      if (!mounted) return;
-      setState(() {
-        _loading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _loading = false;
+        });
+      }
     }
   }
 
