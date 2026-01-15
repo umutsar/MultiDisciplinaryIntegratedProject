@@ -27,7 +27,7 @@ class MockApi {
       );
       final hh = dt.hour.toString().padLeft(2, '0');
       items.add(
-        HistoryItem(time: '$hh:00', count: _random.nextInt(51)),
+        HistoryItem(time: '$hh:00', count: _random.nextInt(51), timestamp: dt),
       );
     }
     return items;

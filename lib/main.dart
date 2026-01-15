@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
+import 'package:ai_vehicle_counter/l10n/app_localizations.dart';
 import 'ui/screens/home_screen.dart';
 import 'ui/screens/history_screen.dart';
 import 'ui/screens/settings_screen.dart';
 import 'ui/screens/splash_screen.dart';
 import 'ui/themes/app_themes.dart';
 import 'ui/themes/theme_provider.dart';
+import 'ui/localization/locale_provider.dart';
 
 /// Uygulamanın giriş noktası. Tema sağlayıcısı ile birlikte uygulamayı başlatır.
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
+      ],
       child: const VehicleCounterApp(),
     ),
   );
@@ -24,15 +30,23 @@ class VehicleCounterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = context.watch<ThemeProvider>();
+    final localeProvider = context.watch<LocaleProvider>();
+
+    // Android 12+ "system splash screen" zaten gösterildiği için Android'de ekstra
+    // Flutter splash ekranı göstermiyoruz (iki splash hissi oluşmasın).
+    final bool showFlutterSplash =
+        !(defaultTargetPlatform == TargetPlatform.android);
     return MaterialApp(
-      title: 'AI Vehicle Counter',
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
       debugShowCheckedModeBanner: false,
       theme: AppThemes.light(),
       darkTheme: AppThemes.dark(),
       themeMode: themeProvider.themeMode,
-      initialRoute: '/splash',
+      locale: localeProvider.locale,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      home: showFlutterSplash ? const SplashScreen() : const NavigationRoot(),
       routes: {
-        '/splash': (context) => const SplashScreen(),
         '/root': (context) => const NavigationRoot(),
       },
     );
@@ -50,18 +64,43 @@ class NavigationRoot extends StatefulWidget {
 class _NavigationRootState extends State<NavigationRoot> {
   int _selectedIndex = 0;
 
-  static final List<Widget> _screens = <Widget>[
-    const HomeScreen(),
-    const HistoryScreen(),
-    const SettingsScreen(),
-  ];
+  Widget _buildScreen(int index) {
+    switch (index) {
+      case 0:
+        return const HomeScreen(key: ValueKey('home'));
+      case 1:
+        return const HistoryScreen(key: ValueKey('history'));
+      case 2:
+      default:
+        return const SettingsScreen(key: ValueKey('settings'));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final brightness = Theme.of(context).brightness;
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _screens,
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 280),
+        switchInCurve: Curves.easeOutCubic,
+        switchOutCurve: Curves.easeInCubic,
+        transitionBuilder: (child, animation) {
+          return FadeTransition(
+            opacity: animation,
+            child: SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(0.02, 0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            ),
+          );
+        },
+        child: KeyedSubtree(
+          key: ValueKey('${brightness.name}-$_selectedIndex'),
+          child: _buildScreen(_selectedIndex),
+        ),
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
@@ -70,21 +109,21 @@ class _NavigationRootState extends State<NavigationRoot> {
             _selectedIndex = index;
           });
         },
-        destinations: const <NavigationDestination>[
+        destinations: <NavigationDestination>[
           NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Home',
+            icon: const Icon(Icons.home_outlined),
+            selectedIcon: const Icon(Icons.home),
+            label: l10n.home,
           ),
           NavigationDestination(
-            icon: Icon(Icons.history_outlined),
-            selectedIcon: Icon(Icons.history),
-            label: 'History',
+            icon: const Icon(Icons.history_outlined),
+            selectedIcon: const Icon(Icons.history),
+            label: l10n.history,
           ),
           NavigationDestination(
-            icon: Icon(Icons.settings_outlined),
-            selectedIcon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: const Icon(Icons.settings_outlined),
+            selectedIcon: const Icon(Icons.settings),
+            label: l10n.settings,
           ),
         ],
       ),

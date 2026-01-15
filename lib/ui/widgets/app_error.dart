@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ai_vehicle_counter/l10n/app_localizations.dart';
 
 /// AppError: hata mesajı ve opsiyonel 'Tekrar dene' butonu gösterir.
 class AppError extends StatelessWidget {
   const AppError({
     super.key,
-    this.message = 'Bir şeyler ters gitti, lütfen tekrar deneyin.',
+    this.message = '',
     this.onRetry,
   });
 
@@ -14,6 +15,9 @@ class AppError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+    final effectiveMessage =
+        message.isNotEmpty ? message : (l10n?.genericError ?? 'Error');
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -25,7 +29,7 @@ class AppError extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          message,
+          effectiveMessage,
           style: theme.textTheme.bodyMedium?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
           ),
@@ -36,7 +40,7 @@ class AppError extends StatelessWidget {
           FilledButton.icon(
             onPressed: onRetry,
             icon: const Icon(Icons.refresh),
-            label: const Text('Tekrar dene'),
+            label: Text(l10n?.tryAgain ?? 'Try again'),
           ),
         ],
       ],

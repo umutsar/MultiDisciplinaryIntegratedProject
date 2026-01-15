@@ -13,10 +13,12 @@ class VehicleCount {
 class HistoryItem {
   final String time;
   final int count;
+  final DateTime timestamp;
 
   const HistoryItem({
     required this.time,
     required this.count,
+    required this.timestamp,
   });
 }
 

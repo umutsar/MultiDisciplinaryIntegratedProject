@@ -1,0 +1,41 @@
+{
+  "@@locale": "tr",
+  "appTitle": "AI Vehicle Counter",
+
+  "vehicleCount": "Araç Sayısı",
+  "home": "Anasayfa",
+  "history": "Geçmiş",
+  "settings": "Ayarlar",
+
+  "lastUpdate": "Son Güncelleme",
+  "refresh": "Yenile",
+
+  "deleteHistory": "Geçmişi Sil",
+  "areYouSure": "Emin misiniz?",
+  "cancel": "İptal",
+  "delete": "Sil",
+
+  "theme": "Tema",
+  "darkMode": "Karanlık Mod",
+  "language": "Dil",
+  "languageEnglish": "İngilizce",
+  "languageTurkish": "Türkçe",
+
+  "today": "Bugün",
+  "yesterday": "Dün",
+  "date": "Tarih",
+
+  "noData": "Veri yok",
+  "tryAgain": "Tekrar dene",
+  "genericError": "Bir şeyler ters gitti, lütfen tekrar deneyin.",
+  "historyDeleteFailed": "Geçmiş silinemedi. Lütfen tekrar deneyin.",
+
+  "apiBaseUrl": "API Base URL",
+  "versionLabel": "Sürüm {version}",
+  "@versionLabel": {
+    "placeholders": {
+      "version": {}
+    }
+  }
+}
+

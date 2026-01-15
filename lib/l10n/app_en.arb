@@ -1,0 +1,41 @@
+{
+  "@@locale": "en",
+  "appTitle": "AI Vehicle Counter",
+
+  "vehicleCount": "Vehicle Count",
+  "home": "Home",
+  "history": "History",
+  "settings": "Settings",
+
+  "lastUpdate": "Last update",
+  "refresh": "Refresh",
+
+  "deleteHistory": "Delete History",
+  "areYouSure": "Are you sure?",
+  "cancel": "Cancel",
+  "delete": "Delete",
+
+  "theme": "Theme",
+  "darkMode": "Dark Mode",
+  "language": "Language",
+  "languageEnglish": "English",
+  "languageTurkish": "Turkish",
+
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "date": "Date",
+
+  "noData": "No data",
+  "tryAgain": "Try again",
+  "genericError": "Something went wrong, please try again.",
+  "historyDeleteFailed": "Could not delete history. Please try again.",
+
+  "apiBaseUrl": "API Base URL",
+  "versionLabel": "Version {version}",
+  "@versionLabel": {
+    "placeholders": {
+      "version": {}
+    }
+  }
+}
+
