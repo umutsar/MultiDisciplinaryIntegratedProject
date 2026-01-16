@@ -6,9 +6,6 @@
 //
 // "Hardcode etme" için: build-time override destekler.
 // Örn: flutter run --dart-define=API_BASE_URL=http://10.0.2.2:3001
-const String apiBaseUrl = String.fromEnvironment(
-  'API_BASE_URL',
-  defaultValue: 'http://10.0.2.2:3001',
-);
+const String apiBaseUrl = 'http://192.168.33.104:3001';
 
 
