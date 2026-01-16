@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:ai_vehicle_counter/models/vehicle_count.dart';
 import 'package:ai_vehicle_counter/l10n/app_localizations.dart';
 
-/// Basit ve bağımlılıksız mini grafik (line chart).
+/// A simple, dependency-free mini line chart.
 ///
-/// - Yatay eksen: zaman (liste sırası; soldan sağa eski -> yeni)
-/// - Dikey eksen: count
+/// - X axis: time (list order; left-to-right old -> new)
+/// - Y axis: count
 class HistoryMiniChart extends StatelessWidget {
   const HistoryMiniChart({
     super.key,
@@ -33,7 +33,7 @@ class HistoryMiniChart extends StatelessWidget {
       );
     }
 
-    // Ekranda soldan sağa eski -> yeni göstermek için ters çeviriyoruz
+    // Reverse so we display old -> new from left to right.
     final points = items.reversed.toList(growable: false);
 
     return SizedBox(
@@ -60,11 +60,11 @@ class _HistoryMiniChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Card zaten arka plan rengi veriyor; burada ekstra "iç kutu" hissi
-    // yaratmamak için background doldurmuyoruz.
+    // The Card already provides a background color; we don't paint an extra
+    // background here to avoid an "inner box" look.
 
-    // Dark mode'da yan boşluk hissini azaltmak için yatay padding'i minimumda tut.
-    // Alt kısım label alanı için korunuyor.
+    // Keep horizontal padding minimal in dark mode to reduce the "side gutter" feel.
+    // Bottom padding is reserved for the label area.
     const adjustedPadding = EdgeInsets.fromLTRB(0, 12, 0, 18);
     final chart = Rect.fromLTWH(
       adjustedPadding.left,
@@ -76,8 +76,8 @@ class _HistoryMiniChartPainter extends CustomPainter {
     if (chart.width <= 0 || chart.height <= 0) return;
 
     final values = points.map((e) => e.count).toList(growable: false);
-    // "3 değeri 0 gibi görünüyor" algısını azaltmak için grafiği 0 tabanlı ölçekle.
-    // (Count negatif olamaz varsayımı.)
+    // Scale the chart from a 0 baseline to reduce the perception that "3 looks like 0".
+    // (Assuming counts can't be negative.)
     int minV = 0;
     int maxV = values.reduce((a, b) => a > b ? a : b);
     if (maxV == minV) maxV = minV + 1;
@@ -86,7 +86,7 @@ class _HistoryMiniChartPainter extends CustomPainter {
       ..color = theme.colorScheme.onSurface.withValues(alpha: 0.06)
       ..strokeWidth = 1;
 
-    // 3 yatay grid çizgisi
+    // 3 horizontal grid lines
     for (int i = 0; i <= 2; i++) {
       final y = chart.top + (chart.height * i / 2);
       canvas.drawLine(Offset(chart.left, y), Offset(chart.right, y), gridPaint);
@@ -160,12 +160,12 @@ class _HistoryMiniChartPainter extends CustomPainter {
     canvas.drawPath(fillPath, fillPaint);
     canvas.drawPath(linePath, linePaint);
 
-    // Noktalar
+    // Points
     for (int i = 0; i < n; i++) {
       canvas.drawCircle(pts[i], 2.5, dotPaint);
     }
 
-    // Alt etiketler: sadece ilk ve son zamanı yaz (kalabalık olmasın)
+    // Bottom labels: only show the first and last time to avoid clutter.
     final textStyle = theme.textTheme.labelSmall?.copyWith(
       fontSize: 10,
       color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.55),
@@ -183,7 +183,7 @@ class _HistoryMiniChartPainter extends CustomPainter {
             : align == TextAlign.center
                 ? x - tp.width / 2
                 : x;
-        // Etiketler card'dan taşmasın diye biraz içeri al.
+        // Nudge inward a bit so labels don't overflow the card.
         final clampedDx = dx.clamp(labelInset, size.width - tp.width - labelInset);
         tp.paint(canvas, Offset(clampedDx, chart.bottom + 4));
       }

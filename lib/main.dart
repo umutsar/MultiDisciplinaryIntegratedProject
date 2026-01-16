@@ -10,7 +10,7 @@ import 'ui/themes/app_themes.dart';
 import 'ui/themes/theme_provider.dart';
 import 'ui/localization/locale_provider.dart';
 
-/// Uygulamanın giriş noktası. Tema sağlayıcısı ile birlikte uygulamayı başlatır.
+/// App entry point. Bootstraps the app with theme and locale providers.
 void main() {
   runApp(
     MultiProvider(
@@ -23,7 +23,7 @@ void main() {
   );
 }
 
-/// VehicleCounterApp: global tema ve yönlendirme yapılandırmasını sağlar.
+/// VehicleCounterApp: provides global theme and routing configuration.
 class VehicleCounterApp extends StatelessWidget {
   const VehicleCounterApp({super.key});
 
@@ -32,8 +32,8 @@ class VehicleCounterApp extends StatelessWidget {
     final themeProvider = context.watch<ThemeProvider>();
     final localeProvider = context.watch<LocaleProvider>();
 
-    // Android 12+ "system splash screen" zaten gösterildiği için Android'de ekstra
-    // Flutter splash ekranı göstermiyoruz (iki splash hissi oluşmasın).
+    // On Android 12+ the system splash screen is already shown, so we skip an extra
+    // Flutter splash screen on Android to avoid a "double splash" feel.
     final bool showFlutterSplash =
         !(defaultTargetPlatform == TargetPlatform.android);
     return MaterialApp(
@@ -53,7 +53,7 @@ class VehicleCounterApp extends StatelessWidget {
   }
 }
 
-/// NavigationRoot: Bottom Navigation ile Home, History, Settings ekranlarını barındırır.
+/// NavigationRoot: hosts Home, History, and Settings via bottom navigation.
 class NavigationRoot extends StatefulWidget {
   const NavigationRoot({super.key});
 

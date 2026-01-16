@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Canlı (live) hissi için pulsing dot animasyonu.
+/// Pulsing dot animation to convey a "live" indicator.
 class PulsingDot extends StatefulWidget {
   const PulsingDot({
     super.key,

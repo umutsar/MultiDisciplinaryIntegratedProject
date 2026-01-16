@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// AppThemes: Uygulamanın Light/Dark Material 3 temalarını üretir.
+/// AppThemes: builds the app's Light/Dark Material 3 themes.
 class AppThemes {
   // Premium Data Dashboard palette
   // Light: off-white background, clean neutrals
@@ -37,7 +37,7 @@ class AppThemes {
     );
   }
 
-  /// Light tema yapılandırması.
+  /// Light theme configuration.
   static ThemeData light() {
     final ThemeData base = ThemeData(useMaterial3: true, brightness: Brightness.light);
     final scheme = ColorScheme.fromSeed(
@@ -78,7 +78,7 @@ class AppThemes {
     );
   }
 
-  /// Dark tema yapılandırması.
+  /// Dark theme configuration.
   static ThemeData dark() {
     final ThemeData base = ThemeData(useMaterial3: true, brightness: Brightness.dark);
     final scheme = ColorScheme.fromSeed(

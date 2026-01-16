@@ -5,7 +5,7 @@ import 'package:ai_vehicle_counter/services/api_config.dart';
 import 'package:ai_vehicle_counter/ui/localization/locale_provider.dart';
 import 'package:ai_vehicle_counter/ui/themes/theme_provider.dart';
 
-/// SettingsScreen: tema anahtarı, API URL ve sürüm bilgisini gösterir.
+/// SettingsScreen: shows the theme toggle, API URL, and version info.
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 

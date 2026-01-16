@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'api_config.dart';
 
-/// ApiClient: HTTP istekleri için basit bir istemci sarmalayıcı.
+/// ApiClient: a lightweight HTTP client wrapper.
 class ApiClient {
   final http.Client _http;
   final String baseUrl;

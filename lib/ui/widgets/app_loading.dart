@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// AppLoading: tutarlı bir yükleme göstergesi.
+/// AppLoading: a consistent loading indicator.
 class AppLoading extends StatelessWidget {
   const AppLoading({super.key, this.size = 40, this.strokeWidth = 3});
 

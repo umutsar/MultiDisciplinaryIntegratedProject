@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// SplashScreen: açılışta ikon için Scale + Fade animasyonu gösterir
-/// ve animasyon bitince ana ekrana yönlendirir.
+/// SplashScreen: shows a scale + fade animation for the icon on startup
+/// and navigates to the main screen when the animation finishes.
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward().whenComplete(() {
       if (!mounted) return;
-      // Geri dönüş olmasın: replacement navigation
+      // Prevent going back: use replacement navigation.
       Navigator.of(context).pushReplacementNamed('/root');
     });
   }

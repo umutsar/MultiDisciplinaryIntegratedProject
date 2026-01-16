@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ai_vehicle_counter/l10n/app_localizations.dart';
 
-/// AppError: hata mesajı ve opsiyonel 'Tekrar dene' butonu gösterir.
+/// AppError: shows an error message and an optional "Try again" button.
 class AppError extends StatelessWidget {
   const AppError({
     super.key,

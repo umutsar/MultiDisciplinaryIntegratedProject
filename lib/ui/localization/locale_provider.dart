@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
-/// LocaleProvider: uygulamanın aktif dilini yönetir.
+/// LocaleProvider: manages the active app locale.
 ///
-/// Bu projede sadece EN/TR desteklenir.
+/// This project only supports EN/TR.
 class LocaleProvider extends ChangeNotifier {
   Locale _locale = const Locale('tr');
 

@@ -1,4 +1,4 @@
-/// VehicleCount: canlı araç sayısı ve zaman bilgisini tutar.
+/// VehicleCount holds the live vehicle count and its timestamp.
 class VehicleCount {
   final int count;
   final DateTime timestamp;
@@ -9,7 +9,7 @@ class VehicleCount {
   });
 }
 
-/// HistoryItem: saat ve o saate ait araç sayısı bilgisini içerir.
+/// HistoryItem contains an hour label and the vehicle count for that hour.
 class HistoryItem {
   final String time;
   final int count;

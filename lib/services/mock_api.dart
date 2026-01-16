@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:ai_vehicle_counter/models/vehicle_count.dart';
 
-/// MockApi: Gerçek backend hazır olana kadar kullanılan sahte veri sağlayıcısı.
+/// MockApi: fake data provider used until the real backend is ready.
 class MockApi {
   static final Random _random = Random();
 

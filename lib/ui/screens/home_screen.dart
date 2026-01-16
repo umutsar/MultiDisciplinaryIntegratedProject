@@ -7,7 +7,7 @@ import 'package:ai_vehicle_counter/ui/widgets/app_error.dart';
 import 'package:ai_vehicle_counter/ui/widgets/pulsing_dot.dart';
 import 'package:ai_vehicle_counter/services/vehicle_api_service.dart';
 
-/// HomeScreen canlı araç sayısını ve son güncellenme zamanını gösteren ana ekrandır.
+/// HomeScreen is the main screen showing the live vehicle count and the last update time.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -28,13 +28,13 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _loadCount();
 
-    // Home ekranında periyodik otomatik güncelleme (0.5 saniyede bir).
+    // Periodic auto-refresh on the Home screen (every 0.5 seconds).
     _timer = Timer.periodic(const Duration(milliseconds: 500), (_) {
       _pollCount();
     });
   }
 
-  /// Araç sayısını GET endpoint'inden yükler, loading ve hata durumlarını yönetir.
+  /// Loads the vehicle count from the GET endpoint and manages loading/error states.
   Future<void> _loadCount() async {
     setState(() {
       _loading = true;
@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     } catch (e) {
       if (!mounted) return;
-      // UI'yı error'a boğmamak için: sadece ilk hatada error state'ine geç.
+      // To avoid spamming the UI with errors: only enter error state on the first failure.
       if (_errorKey == null) {
         setState(() {
           _errorKey = 'generic';
@@ -65,11 +65,11 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  /// Arka planda sayıyı periyodik olarak çeker.
+  /// Periodically fetches the count in the background.
   ///
-  /// - Loading state'i değiştirmez (UI flicker olmasın)
-  /// - Hata olduğunda UI'ı sürekli error state'ine taşımamak için sadece ilk hatayı gösterir
-  /// - Başarıda error'ı temizler, sayı değişmişse count + lastUpdate günceller
+  /// - Does not toggle the loading state (avoid UI flicker)
+  /// - On error, only surfaces the first failure so the UI doesn't constantly enter error state
+  /// - On success, clears the error; if values changed, updates count + lastUpdate
   Future<void> _pollCount() async {
     if (_loading || _polling) return;
     _polling = true;
@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     } catch (_) {
       if (!mounted) return;
-      // UI'yı error'a boğmamak için: sadece ilk hatada error state'ine geç.
+      // To avoid spamming the UI with errors: only enter error state on the first failure.
       if (_errorKey == null) {
         setState(() {
           _errorKey = 'generic';

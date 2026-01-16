@@ -10,7 +10,7 @@ import 'package:ai_vehicle_counter/services/vehicle_api_service.dart';
 
 enum _HistoryDateFilter { today, yesterday }
 
-/// HistoryScreen saatlik geçmiş araç sayısı verilerini listeleyen ekrandır.
+/// HistoryScreen lists hourly historical vehicle count data.
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
 
@@ -50,13 +50,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
     super.initState();
     _loadHistory();
 
-    // Periyodik arka plan yenileme (UI flicker olmasın diye loading state'i kullanmaz)
+    // Periodic background refresh (doesn't use loading state to avoid UI flicker).
     _timer = Timer.periodic(const Duration(milliseconds: 500), (_) {
       _pollHistory();
     });
   }
 
-  /// Mock API'den tarihsel veriyi çeker, loading ve hata durumlarını yönetir.
+  /// Fetches historical data and manages loading/error states.
   Future<void> _loadHistory() async {
     setState(() {
       _loading = true;
@@ -154,7 +154,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         _items = <HistoryItem>[];
         _errorKey = null;
       });
-      // Silme sonrası tekrar çekelim (DB temiz mi doğrulansın)
+      // After deleting, fetch again to verify the DB is actually cleared.
       _loadHistory();
     } catch (_) {
       if (!mounted) return;

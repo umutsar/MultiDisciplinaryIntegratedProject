@@ -5,14 +5,14 @@ import 'dart:io';
 import 'package:ai_vehicle_counter/models/vehicle_count.dart';
 import 'package:ai_vehicle_counter/services/api_client.dart';
 
-/// UI'de gösterilecek standart kullanıcı mesajı.
+/// Default user-facing message shown in the UI.
 const String _kUserFacingConnectionMessage =
     'Sunucuya bağlanılamadı. Daha sonra tekrar deneyiniz.';
 
-/// Tüm API çağrılarında kullanılacak zaman aşımı.
+/// Timeout used for all API calls.
 const Duration _kRequestTimeout = Duration(seconds: 5);
 
-/// Basit API istisnası; kullanıcıya gösterilecek mesajı taşır.
+/// Simple API exception carrying a user-facing message.
 class ApiException implements Exception {
   final String userMessage;
   final String? debugMessage;
@@ -23,10 +23,10 @@ class ApiException implements Exception {
       '${debugMessage != null ? ' [$debugMessage]' : ''}';
 }
 
-/// Sadece araç sayısını backend'den çeker.
+/// Fetches only the vehicle count from the backend.
 ///
-/// Bu fonksiyon UI'nın basit `int` beklentisi için korunur; altta
-/// `/vehicle-count` endpoint'inden gelen stabil değeri kullanır.
+/// This function is kept to satisfy the UI's simple `int` expectation; under the hood
+/// it uses the stable value returned by the `/vehicle-count` endpoint.
 Future<int> fetchCarCount({ApiClient? client}) async {
   final vc = await fetchLatestVehicleCount(client: client);
   return vc.count;
